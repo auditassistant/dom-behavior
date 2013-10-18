@@ -2,6 +2,8 @@ var test = require('tape')
 var behave = require('../')
 var h = require('hyperscript')
 
+require('es5-shim')
+
 test('stuff', function(t){
   t.plan(9)
 
