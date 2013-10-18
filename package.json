@@ -1,0 +1,52 @@
+{
+  "name": "dom-behavior",
+  "version": "0.0.0",
+  "description": "Define javascript behavior for DOM elements",
+  "main": "index.js",
+  "scripts": {
+    "test": "testling -x open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmckegg/dom-behavior.git"
+  },
+  "keywords": [
+    "dom",
+    "element",
+    "behavior",
+    "events",
+    "addEventListener"
+  ],
+  "author": "Matt McKegg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mmckegg/dom-behavior/issues"
+  },
+  "devDependencies": {
+    "tape": "~2.0.0",
+    "hyperscript": "~1.2.2"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "iexplore/6.0..latest",
+      "chrome/10.0",
+      "chrome/25.0",
+      "chrome/latest",
+      "chrome/canary",
+      "firefox/3.6",
+      "firefox/20.0",
+      "firefox/latest",
+      "firefox/nightly",
+      "opera/12.0",
+      "opera/latest",
+      "safari/4.0",
+      "safari/latest",
+      "opera/next",
+      "iphone/6.0..latest",
+      "ipad/6.0..latest",
+      "safari/6.0..latest",
+      "android-browser/4.2..latest"
+    ]
+  }
+}
