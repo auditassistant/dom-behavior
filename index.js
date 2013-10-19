@@ -34,11 +34,13 @@ module.exports = function(behaviors, rootElement, options){
     }
   }
 
-  return function(action, element){
+  return function(action, node){
     if (action == 'append'){
-      add(element)
+      if (node.getAttribute && node.getAttribute(options.attribute)){
+        add(node)
+      }
     } else {
-      change(action, element)
+      change(action, node)
     }
   }
 }
