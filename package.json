@@ -30,7 +30,6 @@
   "testling": {
     "files": "test/*.js",
     "browsers": [
-      "iexplore/6.0..latest",
       "chrome/10.0",
       "chrome/25.0",
       "chrome/latest",
@@ -47,7 +46,8 @@
       "iphone/6.0..latest",
       "ipad/6.0..latest",
       "safari/6.0..latest",
-      "android-browser/4.2..latest"
+      "android-browser/4.2..latest",
+      "iexplore/6.0..latest"
     ]
   }
 }
