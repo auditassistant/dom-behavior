@@ -70,6 +70,6 @@ linkDiv.setAttribute('data-href', '/new-url')
 notify('update', linkDiv)
 ```
 
-### Using with [become](https://github.com/mmckegg/become), [json-context](./json-context) and [rincewind](./rincewind)
+### Using with [become](https://github.com/mmckegg/become), [json-context](https://github.com/mmckegg/json-context) and [rincewind](https://github.com/mmckegg/rincewind)
 
 See [https://github.com/mmckegg/realtime-blog-example-with-browserify](https://github.com/mmckegg/realtime-blog-example-with-browserify).
