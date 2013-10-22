@@ -4,6 +4,10 @@ module.exports = function(behaviors, rootElement, options){
   options.attribute = options.attribute || 'data-behavior'
   options.property = options.property || 'behaviors'
 
+  if (!rootElement){
+    rootElement = document
+  }
+
   walkDom(rootElement, function(node){
     if (node.getAttribute && node.getAttribute(options.attribute)){
       add(node)
