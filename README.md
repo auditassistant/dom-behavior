@@ -30,7 +30,7 @@ Define javascript behavior for DOM elements.
 ```js
 var behave = require('dom-behavior')
 
-var notify = behave({
+var behaviors = {
   edit: function(element){
     element.onclick = function(){
       // activate editor
@@ -61,13 +61,19 @@ var notify = behave({
     // multiple behaviors can be added to the same element 
     // seperated by spaces. Just like html classes.
   }
-}, document)
+}
+
+var notify = behave(behaviors, document)
 
 var linkDiv = document.getElementById('link')
 linkDiv.setAttribute('data-href', '/new-url')
 
 // normally this would be called from some data-binding/templating thingy.
+// triggers func('update') on any behaviors
 notify('update', linkDiv)
+
+// remove behaviors and trigger func('remove')
+notify('remove', linkDiv)
 ```
 
 ### Using with [become](https://github.com/mmckegg/become), [json-context](https://github.com/mmckegg/json-context) and [rincewind](https://github.com/mmckegg/rincewind)

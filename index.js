@@ -8,53 +8,83 @@ module.exports = function(behaviors, rootElement, options){
     rootElement = document
   }
 
-  walkDom(rootElement, function(node){
-    if (node.getAttribute && node.getAttribute(options.attribute)){
-      add(node)
-    }
-  })
 
-  function add(node){
-    if (!node[options.property]){
-      node[options.property] = node[options.property] || {}
-    }
+  function apply(rootElement, recursive){
+    walkDom(rootElement, function(node){
 
-    var behaviorNames = node.getAttribute(options.attribute).split(' ')
-    behaviorNames.forEach(function(name){
-      if (behaviors[name]){
-        node[options.property][name] = behaviors[name](node)
+      if (!recursive && node !== rootElement){
+        return false // break
+      } else if (recursive === 'inner' && node === rootElement){
+        return // continue
+      }
+
+      if (node.getAttribute && node.getAttribute(options.attribute)){
+        if (!node[options.property]){
+          node[options.property] = node[options.property] || {}
+        }
+
+        var behaviorNames = node.getAttribute(options.attribute).split(' ')
+        var nodeBehaviors = node[options.property]
+
+        // trigger updates or removes
+        Object.keys(nodeBehaviors).forEach(function(key){
+          var current = nodeBehaviors[key]
+          if (~behaviorNames.indexOf(key)){
+            if (typeof current == 'function') current('change')
+          } else {
+            nodeBehaviors[key] = null
+            if (typeof current == 'function') current('remove')
+          }
+        })
+
+        // add new behaviors
+        behaviorNames.forEach(function(name){
+          if (behaviors[name] && !nodeBehaviors[name]){
+            nodeBehaviors[name] = behaviors[name](node)
+          }
+        })
       }
     })
   }
 
-  function change(action, node){
-    var nodeBehaviors = node[options.property]
-    if (nodeBehaviors){
-      Object.keys(nodeBehaviors).forEach(function(name){
-        if (typeof nodeBehaviors[name] == 'function'){
-          nodeBehaviors[name](action)
-        }
-      })
+  apply(rootElement, true)
+
+  return function(change, node){
+    console.log(change, node)
+    if (change === 'remove'){
+      remove(node, options)
+    } else if (change === 'inner'){
+      apply(node, 'inner')
+    } else if (change === 'attributes'){
+      apply(node, false)
+    } else {
+      apply(node, true)
     }
   }
 
-  return function(action, node){
-    if (action == 'append'){
-      if (node.getAttribute && node.getAttribute(options.attribute)){
-        add(node)
-      }
-    } else {
-      change(action, node)
-    }
-  }
 }
 
-
+var remove = module.exports.remove = function(rootElement, options){
+  walkDom(rootElement, function(node){
+    if (node.getAttribute && node.getAttribute(options.attribute) && node[options.property]){
+      var nodeBehaviors = node[options.property]
+      Object.keys(nodeBehaviors).forEach(function(key){
+        var current = nodeBehaviors[key]
+        if (typeof current == 'function'){
+          current('remove')
+        }
+      })
+      node[options.property] = null
+    }
+  })
+}
 
 function walkDom(rootNode, iterator){
   var currentNode = rootNode.firstChild
   while (currentNode){
-    iterator(currentNode)
+    if (iterator(currentNode) === false){
+      break // early escape
+    }
     if (currentNode.firstChild){
       currentNode = currentNode.firstChild
     } else {
