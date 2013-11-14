@@ -50,7 +50,6 @@ module.exports = function(behaviors, rootElement, options){
   apply(rootElement, true)
 
   return function(change, node){
-    console.log(change, node)
     if (change === 'remove'){
       remove(node, options)
     } else if (change === 'inner'){
