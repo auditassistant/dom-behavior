@@ -79,7 +79,7 @@ var remove = module.exports.remove = function(rootElement, options){
 }
 
 function walkDom(rootNode, iterator){
-  var currentNode = rootNode.firstChild
+  var currentNode = rootNode
   while (currentNode){
     if (iterator(currentNode) === false){
       break // early escape

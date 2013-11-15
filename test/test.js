@@ -32,7 +32,7 @@ test('stuff', function(t){
     }
   }
 
-  behave(behaviors, rootElement)
+  var notify = behave(behaviors, rootElement)
   
   t.deepEqual(
     Object.keys(divWithBehaviorA.behaviors), 
@@ -50,6 +50,6 @@ test('stuff', function(t){
     'both added to final div'
   )
 
-  behave(behaviors, divWithBothBehaviors)
+  notify('change', divWithBothBehaviors)
 
 })
