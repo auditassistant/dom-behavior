@@ -73,7 +73,7 @@ var remove = module.exports.remove = function(rootElement, options){
       Object.keys(nodeBehaviors).forEach(function(key){
         var current = nodeBehaviors[key]
         if (typeof current == 'function'){
-          current('remove')
+          current.call(node, 'remove')
         }
       })
       node[options.property] = null
