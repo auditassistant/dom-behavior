@@ -39,8 +39,11 @@ module.exports = function(behaviors, rootElement, options){
 
         // add new behaviors
         behaviorNames.forEach(function(name){
-          if (behaviors[name] && !nodeBehaviors[name]){
-            nodeBehaviors[name] = behaviors[name](node)
+          if (!(name in nodeBehaviors)){
+            var behavior = getBehavior(name, behaviors)
+            if (behavior){
+              nodeBehaviors[name] = behavior(node)
+            }
           }
         })
       }

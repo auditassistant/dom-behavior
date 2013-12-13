@@ -53,3 +53,22 @@ test('stuff', function(t){
   notify('change', divWithBothBehaviors)
 
 })
+
+test('nested behavior', function(t){
+  t.plan(2)
+
+  var divWithBehavior = h('div', {'data-behavior': 'group.behaviorName'})
+
+    'group': {
+        t.ok(element == divWithBehavior, 'behavior added to correct element')
+      }
+    }
+  }
+
+  behave(behaviors, divWithBehavior)
+
+  t.deepEqual(
+    Object.keys(divWithBehavior.behaviors), 
+    ['group.behaviorName'], 'behaviorA added to div'
+  )
+})
