@@ -30,10 +30,10 @@ module.exports = function(behaviors, rootElement, options){
         Object.keys(nodeBehaviors).forEach(function(key){
           var current = nodeBehaviors[key]
           if (~behaviorNames.indexOf(key)){
-            if (typeof current == 'function') current('change')
+            if (typeof current == 'function') current.call(node, 'change')
           } else {
             nodeBehaviors[key] = null
-            if (typeof current == 'function') current('remove')
+            if (typeof current == 'function') current.call(node, 'remove')
           }
         })
 
@@ -79,6 +79,22 @@ var remove = module.exports.remove = function(rootElement, options){
       node[options.property] = null
     }
   })
+}
+
+function getBehavior(name, behaviors){
+  if (behaviors[name]){
+    return behaviors[name]
+  } else if (~name.indexOf('.')){ // nested behaviors
+    var parts = name.split('.')
+    for (var i=0;i<parts.length;i++){
+      if (behaviors && behaviors[parts[i]]){
+        behaviors = behaviors[parts[i]]
+      } else {
+        behaviors = null
+      }
+    }
+    return behaviors
+  }
 }
 
 function walkDom(rootNode, iterator){

@@ -59,7 +59,9 @@ test('nested behavior', function(t){
 
   var divWithBehavior = h('div', {'data-behavior': 'group.behaviorName'})
 
+  var behaviors = {
     'group': {
+      'behaviorName': function(element){
         t.ok(element == divWithBehavior, 'behavior added to correct element')
       }
     }
@@ -71,4 +73,25 @@ test('nested behavior', function(t){
     Object.keys(divWithBehavior.behaviors), 
     ['group.behaviorName'], 'behaviorA added to div'
   )
+
+})
+
+test('notifyChange "this" bound to element', function(t){
+  t.plan(2)
+
+  var divWithBehavior = h('div', {'data-behavior': 'checkBound'})
+
+  function checker(change){
+    t.equal(this, divWithBehavior)
+    t.equal(change, 'change')
+  }
+
+  var behaviors = {
+    'checkBound': function(element){
+      return checker
+    }
+  }
+
+  var notifyChange = behave(behaviors, divWithBehavior)
+  notifyChange('change', divWithBehavior)
 })
