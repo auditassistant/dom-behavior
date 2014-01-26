@@ -32,7 +32,7 @@ module.exports = function(behaviors, rootElement, options){
           if (~behaviorNames.indexOf(key)){
             if (typeof current == 'function') current.call(node, 'change')
           } else {
-            nodeBehaviors[key] = null
+            ;delete nodeBehaviors[key]
             if (typeof current == 'function') current.call(node, 'remove')
           }
         })
