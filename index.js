@@ -57,9 +57,9 @@ module.exports = function(behaviors, rootElement, options){
       remove(node, options)
     } else if (change === 'inner'){
       apply(node, 'inner')
-    } else if (change === 'attributes'){
-      apply(node, false)
-    } else {
+    } else if (change === 'update'){
+      return apply(node, false)
+    } else { // append
       apply(node, true)
     }
   }

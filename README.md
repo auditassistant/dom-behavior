@@ -69,8 +69,11 @@ var linkDiv = document.getElementById('link')
 linkDiv.setAttribute('data-href', '/new-url')
 
 // normally this would be called from some data-binding/templating thingy.
-// triggers func('update') on any behaviors
+// triggers func('change') on any behaviors directly on this node
 notify('update', linkDiv)
+
+// triggers func('change') on any child of this node with behaviors
+notify('inner', linkDiv)
 
 // remove behaviors and trigger func('remove')
 notify('remove', linkDiv)
