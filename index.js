@@ -105,9 +105,12 @@ function walkDom(rootNode, iterator){
     }
     if (currentNode.firstChild){
       currentNode = currentNode.firstChild
+    } else if (currentNode === rootNode){
+      currentNode = null
     } else {
+      
       while (currentNode && !currentNode.nextSibling){
-        if (currentNode !== rootNode) {
+        if (currentNode.parentNode !== rootNode){
           currentNode = currentNode.parentNode
         } else {
           currentNode = null
