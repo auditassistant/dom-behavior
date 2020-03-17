@@ -44,6 +44,14 @@ module.exports = function (behaviors, rootElement, options) {
             }
           }
         })
+      } else if (node[options.property]) {
+        var oldNodeBehaviors = node[options.property]
+        // Remove behaviors from elements that no longer have behaviors
+        Object.keys(oldNodeBehaviors).forEach(function (key) {
+          var current = oldNodeBehaviors[key]
+          delete oldNodeBehaviors[key]
+          if (typeof current === 'function') current.call(node, 'remove')
+        })
       }
     })
   }
